@@ -8,6 +8,10 @@
     gap: 80px;
     border-bottom: 1px solid #E7E7E7;
 
+    >img{
+        cursor: pointer;
+    }
+
     .c {
         display: flex;
         flex-direction: row;
