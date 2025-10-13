@@ -1,0 +1,26 @@
+name: Supabase Schema Mirror
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "supabase/**/*.sql"
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Apply Supabase SQL files (10~70)
+        run: |
+          for f in supabase/*.sql; do
+            echo "▶ Executing $f"
+            psql -4 "${{ secrets.SUPABASE_DB_URL }}" -v ON_ERROR_STOP=1 -f "$f"
+          done
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
