@@ -1,0 +1,23 @@
+name: Crawl & Refresh Week
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 18 * * 1"  # 매주 화요일 새벽(한국 03:00) 월요일 18:00 UTC
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Run crawler
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python crawler.py
