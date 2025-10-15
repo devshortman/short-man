@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './style.css'
 import { data } from '../utils/source';
 import Card from '../../component/short-card/short-card';
@@ -11,10 +12,20 @@ import eat from '../../assets/image/eat.svg';
 import parentOn from '../../assets/image/parent_on.svg';
 import healthOn from '../../assets/image/health_on.svg';
 import eatOn from '../../assets/image/eat_on.svg';
+import Footer from '../../component/footer/footer';
 
 
 
 const Kr = () => {
+    const location = useLocation();
+    const title =
+        location.pathname.includes('ch')
+            ? '중국 숏폼 트렌드'
+            : location.pathname.includes('glob')
+            ? '글로벌 숏폼 트렌드'
+            : '한국 숏폼 트렌드';
+
+    
     const categories = [
         { id: 'all', name: '전체', icon: null, iconOn: null },
         { id: 'parent', name: '맘플 (육아/키즈)', icon: parent, iconOn: parentOn },
@@ -31,7 +42,7 @@ const Kr = () => {
 
             <div className='body'>
                 <div className='ca'>
-                    <div>한국 숏폼 트랜드</div>
+                    <div>{title}</div>
                     <div>
                         {categories.map((category) => (
                             <div
@@ -60,6 +71,7 @@ const Kr = () => {
                     )}
                 </div>
             </div>
+            <Footer></Footer>
 
         </div>
     );
