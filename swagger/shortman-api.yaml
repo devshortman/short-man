@@ -188,7 +188,7 @@ definitions:
       source:
         type: string
         format: uri
-        example: "https://cdn.shortman.com/source-icon.svg"
+        example: "https://www.youtube.com/shorts/8Tv63CVLXBw"
       description:
         type: string
         example: "도마꽂이로 도마만 꽂으시나요🥺 ..."
