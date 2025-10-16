@@ -12,7 +12,7 @@
 ## 실행 방법
 ### 로컬
 ```bash
-cd backend
+cd /short-man_backend/backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export SUPABASE_URL=<your-supabase-url>
