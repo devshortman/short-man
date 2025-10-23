@@ -218,6 +218,104 @@ paths:
                 items:
                   $ref: "#/definitions/Comment"
 
+  /search:
+    get:
+      summary: "통합 검색"
+      description: "키워드를 기반으로 모든 숏폼에서 제목, 설명, 닉네임을 검색합니다."
+      parameters:
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색할 키워드 (예: '다이소', '주방용품')"
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          default: 20
+          description: "한 번에 불러올 검색 결과 수"
+        - name: page
+          in: query
+          required: false
+          type: integer
+          default: 1
+          description: "페이지 번호"
+      responses:
+        200:
+          description: "검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              totalCount:
+                type: integer
+                example: 100
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
+  /search/category:
+    get:
+      summary: "카테고리별 검색"
+      description: "특정 카테고리에서 키워드 검색을 수행합니다."
+      parameters:
+        - name: category
+          in: query
+          required: true
+          type: string
+          enum: [all, parent, eat, health, etc]
+          description: "검색할 카테고리"
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색 키워드"
+      responses:
+        200:
+          description: "카테고리 내 검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              category:
+                type: string
+              totalCount:
+                type: integer
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
+  /search/country:
+    get:
+      summary: "국가별 검색"
+      description: "특정 국가(region) 내에서 키워드 검색을 수행합니다."
+      parameters:
+        - name: region
+          in: query
+          required: true
+          type: string
+          enum: [korea, global, china]
+          description: "검색할 지역명 (한국: korea, 해외: global, 중국: china)"
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색 키워드"
+      responses:
+        200:
+          description: "국가별 검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              region:
+                type: string
+              totalCount:
+                type: integer
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
 definitions:
   Short:
     type: object
