@@ -7,7 +7,7 @@ const Footer = () => {
             <img src={logo} alt="logo" />
             <div className='fc'>
                 <div>
-                    <div>상호명 : 만나통신사</div> <div className="line" />
+                    <div>상호명 : 숏만랩</div> <div className="line" />
                     <div>대표자 : 윤승진</div><div className="line" />
                     <div>주소 : 서울 강남구 도산대로 145 인우빌딩 12층 1208</div>
                 </div>

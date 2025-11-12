@@ -26,6 +26,7 @@
             }
         }
 
+
         .account {
             display: flex;
             justify-content: space-between;
@@ -491,3 +492,27 @@
     text-align: right;
     font-weight: 600;
 }
+
+/* Added styles for example table */
+.example-table {
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  background: #fafafa;
+}
+.example-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.example-table th, .example-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e3e3e3;
+}
+.example-description {
+  font-size: 13px;
+  color: #888;
+  margin-top: 5px;
+}
+

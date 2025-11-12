@@ -5,11 +5,8 @@ info:
     홈 페이지에 노출되는 한국/해외/중국 숏폼 트렌드 리스트 및
     좋아요·북마크·댓글 관련 기능을 제공하는 API 명세서.
   version: "1.1.0"
-  contact:
-    name: "Front-End Developer: 한열 탁"
-    email: "hytak@justcompany.co.kr"
 
-host: "api.shortman.com"
+host: "host.location"
 basePath: "/api"
 schemes:
   - https
@@ -147,6 +144,57 @@ paths:
           description: "댓글 작성 성공"
           schema:
             $ref: "#/definitions/Comment"
+            
+  /trends/category:
+    get:
+      summary: "카테고리별 숏폼 리스트 조회"
+      description: |
+        선택한 지역(region)과 카테고리(category)에 따라 숏폼 트렌드 데이터를 조회합니다.  
+        한국 / 해외 / 중국 섹션 내에서 '전체', '맘플', '먹플', '헬플', '기타' 등을 선택했을 때 호출됩니다.
+      parameters:
+        - name: region
+          in: query
+          required: true
+          type: string
+          enum: [korea, global, china]
+          description: "조회할 지역명 (한국: korea, 해외: global, 중국: china)"
+        - name: category
+          in: query
+          required: false
+          type: string
+          enum: [all, parent, eat, health, etc]
+          description: "조회할 카테고리 (전체, 맘플, 먹플, 헬플, 기타)"
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          default: 16
+          description: "한 번에 불러올 숏폼 개수 (기본값 16)"
+        - name: page
+          in: query
+          required: false
+          type: integer
+          default: 1
+          description: "페이지 번호 (페이징 또는 인피니트 스크롤 시 사용)"
+      responses:
+        200:
+          description: "요청한 지역 및 카테고리의 숏폼 리스트 반환"
+          schema:
+            type: object
+            properties:
+              region:
+                type: string
+                example: "korea"
+              category:
+                type: string
+                example: "eat"
+              totalCount:
+                type: integer
+                example: 160
+              shorts:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
 
   /shorts/{id}/comments:
     get:
@@ -170,6 +218,104 @@ paths:
                 items:
                   $ref: "#/definitions/Comment"
 
+  /search:
+    get:
+      summary: "통합 검색"
+      description: "키워드를 기반으로 모든 숏폼에서 제목, 설명, 닉네임을 검색합니다."
+      parameters:
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색할 키워드 (예: '다이소', '주방용품')"
+        - name: limit
+          in: query
+          required: false
+          type: integer
+          default: 20
+          description: "한 번에 불러올 검색 결과 수"
+        - name: page
+          in: query
+          required: false
+          type: integer
+          default: 1
+          description: "페이지 번호"
+      responses:
+        200:
+          description: "검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              totalCount:
+                type: integer
+                example: 100
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
+  /search/category:
+    get:
+      summary: "카테고리별 검색"
+      description: "특정 카테고리에서 키워드 검색을 수행합니다."
+      parameters:
+        - name: category
+          in: query
+          required: true
+          type: string
+          enum: [all, parent, eat, health, etc]
+          description: "검색할 카테고리"
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색 키워드"
+      responses:
+        200:
+          description: "카테고리 내 검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              category:
+                type: string
+              totalCount:
+                type: integer
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
+  /search/country:
+    get:
+      summary: "국가별 검색"
+      description: "특정 국가(region) 내에서 키워드 검색을 수행합니다."
+      parameters:
+        - name: region
+          in: query
+          required: true
+          type: string
+          enum: [korea, global, china]
+          description: "검색할 지역명 (한국: korea, 해외: global, 중국: china)"
+        - name: keyword
+          in: query
+          required: true
+          type: string
+          description: "검색 키워드"
+      responses:
+        200:
+          description: "국가별 검색 결과 반환"
+          schema:
+            type: object
+            properties:
+              region:
+                type: string
+              totalCount:
+                type: integer
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Short"
+
 definitions:
   Short:
     type: object
@@ -191,7 +337,7 @@ definitions:
       source:
         type: string
         format: uri
-        example: "https://cdn.shortman.com/source-icon.svg"
+        example: "https://유튜브, 인스타, 틱톡"
       description:
         type: string
         example: "도마꽂이로 도마만 꽂으시나요🥺 ..."

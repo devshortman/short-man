@@ -12,7 +12,7 @@ const Header = () => {
       { label: '한국', path: '/kr' },
       { label: '해외', path: '/glob' },
       { label: '중국', path: '/ch' },
-      { label: '커머스', path: '/kr' },
+      { label: '커머스', path: '/com' },
     ];
 
     return (

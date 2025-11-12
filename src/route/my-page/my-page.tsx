@@ -13,8 +13,10 @@ import Up from '../../assets/image/up.svg';
 import Down from '../../assets/image/down.svg';
 import './style.css'
 import RadarChartComponent from '../../component/spider-chart/spider-chart';
+import { useNavigate } from 'react-router-dom';
 
 const MyPage = () => {
+    const navigate = useNavigate();
 
     const data = [
         { label: "팔로워", value: "7300K", icon: "up", status: "+0.97%", period: "30일 기준", description: "0.6896-1.22%는 유사한 채널의 평균적인 팔로워수 증가 등급을 나타내는 수치입니다.", face: Normal, grade: "일반", card: "2" },
@@ -56,6 +58,9 @@ const MyPage = () => {
                     </div>
 
                     <div className='slist'>
+                        <div className='Skeleton' onClick={() => navigate('/my-sample')}>Concept
+                            <img src={Fresh} alt="Fresh" />
+                        </div>
                         <img src={Tiktok} alt="Tiktok" />
                         <img src={Youtube} alt="Youtube" />
                         <img src={Insta} alt="Insta" />
@@ -162,7 +167,7 @@ const MyPage = () => {
 
                                 <div>
                                     <div className='im'>
-                                    <img src={Fresh} alt="Fresh" />
+                                        <img src={Fresh} alt="Fresh" />
                                     </div>
                                     <div>
                                         <div>업데이트 : </div>
